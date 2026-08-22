@@ -256,8 +256,8 @@
   @keyframes tickerMove{from{transform:translateX(0);}to{transform:translateX(-50%);}}
   @media (prefers-reduced-motion: reduce){.ticker{animation:none;}}
 
-  /* ---------- STEPS (receipt line items) ---------- */
-  .steps-section{padding:96px 0;}
+  /* ---------- STEPS (visual mock) ---------- */
+  .steps-section{padding:96px 0;overflow:hidden;}
   .section-head{max-width:560px;margin-bottom:52px;}
   .section-label{
     font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;
@@ -265,27 +265,101 @@
   }
   .section-head h2{font-size:clamp(26px,3.4vw,36px);letter-spacing:-0.015em;font-weight:800;line-height:1.15;}
 
-  .steps-ticket{
-    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-    max-width:640px;overflow:hidden;
+  .steps-grid{display:flex;gap:44px;align-items:center;justify-content:space-between;}
+  @media(max-width:960px){.steps-grid{flex-direction:column;align-items:stretch;gap:40px;}}
+
+  .steps-text{flex:0 0 360px;max-width:360px;}
+  @media(max-width:960px){.steps-text{flex-basis:auto;max-width:100%;}}
+  .steps-text .section-head{margin-bottom:20px;}
+  .steps-text p.body{font-size:15.5px;color:var(--muted);line-height:1.65;max-width:420px;margin-bottom:26px;}
+  .steps-text p.body b{color:var(--ink);}
+  .steps-recap{display:flex;flex-direction:column;gap:12px;max-width:400px;}
+  .steps-recap-item{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--muted);}
+  .steps-recap-item .n{
+    font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:11.5px;color:#1B0F24;
+    width:22px;height:22px;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(135deg,var(--gold),var(--cyan));
+    display:flex;align-items:center;justify-content:center;
   }
-  .step-line{
-    display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:start;
-    padding:26px 28px;border-bottom:1px dashed var(--line);
+  .steps-recap-item b{color:var(--ink);font-weight:700;}
+
+  .steps-visual{
+    flex:1;min-width:0;
+    display:flex;align-items:flex-start;gap:16px;
+    overflow-x:auto;padding:16px 6px 20px 20px;margin:-16px -6px -20px -20px;
+    scroll-snap-type:x proximity;
   }
-  .step-line:last-child{border-bottom:none;}
-  .step-tag{
-    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted-2);
-    padding-top:3px;letter-spacing:0.04em;
+  .step-panel{position:relative;flex-shrink:0;scroll-snap-align:start;}
+  .step-num{
+    position:absolute;top:-12px;left:-12px;z-index:5;
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--cyan));
+    color:#1B0F24;font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:13px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 12px rgba(36,21,51,0.28);border:2.5px solid var(--bg);
   }
-  .step-body h3{font-size:17px;font-weight:700;margin-bottom:5px;}
-  .step-body p{font-size:14.5px;color:var(--muted);line-height:1.55;}
-  .step-check{
-    width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);
-    display:flex;align-items:center;justify-content:center;flex-shrink:0;
-    color:transparent;transition:all .4s ease;font-size:12px;
+
+  .mini-phone{
+    width:180px;background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);border-radius:20px;padding:12px;
+    box-shadow:0 22px 48px -18px rgba(36,21,51,0.35);
   }
-  .step-check.on{background:var(--cyan);border-color:var(--cyan);color:#1B0F24;box-shadow:0 0 16px rgba(255,111,145,0.55);}
+  .mini-head{display:flex;align-items:center;gap:8px;padding:3px 3px 12px;border-bottom:1px solid var(--line);margin-bottom:12px;}
+  .mini-avatar{
+    width:26px;height:26px;border-radius:50%;flex-shrink:0;object-fit:cover;
+    background:linear-gradient(135deg,var(--cyan),var(--gold));
+    display:flex;align-items:center;justify-content:center;color:#1B0F24;font-weight:700;font-size:11px;
+  }
+  .mini-head .mn{font-weight:700;font-size:12px;}
+  .mini-head .ms{font-size:9px;color:var(--cyan);font-family:'IBM Plex Mono',monospace;}
+  .mini-tag{font-size:9.5px;color:var(--muted-2);font-style:italic;margin-bottom:5px;padding-left:2px;}
+  .mini-bubble-out{margin-left:auto;max-width:92%;margin-bottom:10px;}
+  .mini-bubble-in{
+    background:#F6EEE5;border:1px solid var(--line-soft);border-radius:12px 12px 12px 3px;
+    padding:8px 10px;max-width:88%;font-size:11.5px;color:var(--ink);
+  }
+  .mini-receipt{
+    background:#0F0815;border-radius:9px;padding:10px;color:#fff;text-align:center;
+    font-family:'IBM Plex Mono',monospace;border:1px solid rgba(255,111,145,0.2);
+  }
+  .mini-receipt .bank{font-size:8.5px;letter-spacing:0.06em;color:var(--gold);margin-bottom:5px;}
+  .mini-receipt .amount{font-size:18px;font-weight:700;}
+  .mini-caption{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--muted-2);text-align:right;margin-top:6px;}
+  .mini-out-note{
+    background:var(--cyan-dim);border:1px solid rgba(255,111,145,0.25);
+    border-radius:12px 12px 3px 12px;padding:9px 10px;margin-left:auto;max-width:92%;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;line-height:1.7;color:var(--ink);
+  }
+  .mini-out-note b{color:var(--cyan);}
+  .mini-link{color:#2f7fda;word-break:break-all;}
+
+  .mini-browser{
+    width:252px;background:var(--ink);border-radius:18px;overflow:hidden;
+    box-shadow:0 22px 48px -18px rgba(36,21,51,0.4);
+  }
+  .mini-browser-bar{height:34px;background:#1A0E28;display:flex;align-items:center;gap:6px;padding:0 12px;}
+  .mini-dot{width:8px;height:8px;border-radius:50%;}
+  .mini-browser-url{
+    margin-left:10px;background:rgba(255,255,255,0.08);color:#B8A8CC;font-size:10px;
+    padding:4px 10px;border-radius:7px;flex:1;font-family:'IBM Plex Mono',monospace;
+  }
+  .mini-dash{padding:18px 18px 20px;color:#F4ECFA;}
+  .mini-dash-title{font-size:16px;font-weight:800;}
+  .mini-dash-title span{color:var(--gold);}
+  .mini-dash-sub{font-size:10.5px;color:#B8A8CC;margin:2px 0 14px;}
+  .mini-dash-cards{display:flex;gap:8px;margin-bottom:14px;}
+  .mini-dash-card{flex:1;background:#2A1B3D;border-radius:10px;padding:9px 10px;}
+  .mini-dash-card .l{font-size:8px;letter-spacing:0.05em;color:#8b7fa0;font-weight:700;}
+  .mini-dash-card .v{font-size:14px;font-weight:800;margin-top:4px;}
+  .mv-green{color:#7CD992;}
+  .mv-pink{color:#FF6F91;}
+  .mv-gold{color:var(--gold);}
+  .mini-dash-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:9px 2px;border-top:1px solid #2A1B3D;font-size:11px;
+  }
+  .mini-dash-row .bk{font-weight:700;}
+  .mini-dash-row .am{color:#7CD992;font-weight:700;}
 
   /* ---------- PRICING ---------- */
   .pricing-section{padding:96px 0;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -363,6 +437,27 @@
   .why-card h3{font-size:17px;font-weight:700;margin-bottom:8px;}
   .why-card p{font-size:14.5px;color:var(--muted);line-height:1.55;}
 
+  /* ---------- FAQ ---------- */
+  .faq-section{padding:96px 0;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .faq-list{max-width:760px;}
+  .faq-item{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    margin-bottom:12px;overflow:hidden;
+  }
+  .faq-item summary{
+    list-style:none;cursor:pointer;padding:20px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    font-weight:700;font-size:15.5px;color:var(--ink);
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item .faq-plus{
+    flex-shrink:0;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:15px;
+    transition:transform .25s ease;
+  }
+  .faq-item[open] .faq-plus{transform:rotate(45deg);}
+  .faq-item p{padding:0 24px 22px;font-size:14.5px;color:var(--muted);line-height:1.6;max-width:640px;}
+
   /* ---------- FINAL CTA ---------- */
   .final-cta{
     background:linear-gradient(150deg, var(--cyan), #A81F49);
@@ -385,6 +480,27 @@
   footer{padding:32px 0 48px;border-top:1px solid var(--line);}
   footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
   footer p{font-size:13px;color:var(--muted-2);font-family:'IBM Plex Mono',monospace;}
+  .footer-social{display:flex;gap:10px;}
+  .footer-social a{
+    width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--muted);
+    transition:border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .footer-social a:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px);}
+  .footer-social svg{width:17px;height:17px;fill:currentColor;}
+  .footer-social svg.ig{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* ---------- FLOATING WHATSAPP BUTTON ---------- */
+  .wa-float{
+    position:fixed;right:22px;bottom:22px;z-index:60;
+    width:58px;height:58px;border-radius:50%;
+    background:#25D366;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 32px -8px rgba(37,211,102,0.65);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .wa-float:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 38px -8px rgba(37,211,102,0.75);}
+  .wa-float svg{width:30px;height:30px;fill:#fff;}
+  @media(max-width:520px){.wa-float{right:16px;bottom:16px;width:52px;height:52px;}.wa-float svg{width:26px;height:26px;}}
 </style>
 </head>
 <body>
@@ -400,6 +516,7 @@
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#precios">Precios</a>
       <a href="#por-que">Por qué</a>
+      <a href="#faq">Preguntas</a>
     </div>
     <a class="nav-cta" href="#precios">Empezar ahora</a>
   </div>
@@ -478,35 +595,91 @@
 
 <section class="steps-section" id="como-funciona">
   <div class="wrap">
-    <div class="section-head">
-      <div class="section-label">Cómo funciona</div>
-      <h2>Tres pasos. Ninguno requiere que abras una app.</h2>
-    </div>
+    <div class="steps-grid">
 
-    <div class="steps-ticket" id="ticket">
-      <div class="step-line">
-        <div class="step-tag mono">01</div>
-        <div class="step-body">
-          <h3>Reenvía la foto</h3>
-          <p>Sirve tanto una captura de pantalla de tu banco como una foto tomada con la cámara a un comprobante impreso. Reenvíala al chat de Comparte, igual que le escribes a cualquier contacto.</p>
+      <div class="steps-text">
+        <div class="section-head">
+          <div class="section-label">Cómo funciona</div>
+          <h2>Solo reenvías. Comparte hace el resto.</h2>
         </div>
-        <div class="step-check on" data-step="">✓</div>
+        <p class="body">
+          Tu cliente te paga y te manda la captura, como siempre. Tú se la reenvías al chat de
+          <b>Comparte</b> y en segundos queda registrada como <b>ingreso o egreso</b>, con tu
+          <b>dashboard actualizado al instante</b> — sin apps que instalar ni planillas que llenar.
+        </p>
+        <div class="steps-recap">
+          <div class="steps-recap-item"><span class="n">1</span><span><b>Reenvía</b> la foto o captura del comprobante</span></div>
+          <div class="steps-recap-item"><span class="n">2</span><span><b>Comparte la lee</b> y la clasifica sola</span></div>
+          <div class="steps-recap-item"><span class="n">3</span><span><b>Queda guardado</b> en tu dashboard, sin contraseña</span></div>
+        </div>
       </div>
-      <div class="step-line">
-        <div class="step-tag mono">02</div>
-        <div class="step-body">
-          <h3>Comparte lo lee</h3>
-          <p>En segundos extrae monto, banco, fecha, hora y las personas involucradas. Si el banco es Pichincha, además verifica el QR contra el sistema oficial.</p>
+
+      <div class="steps-visual">
+
+        <div class="step-panel">
+          <div class="step-num">1</div>
+          <div class="mini-phone">
+            <div class="mini-head">
+              <div class="mini-avatar">TB</div>
+              <div><div class="mn">Tienda Bella</div><div class="ms">en línea</div></div>
+            </div>
+            <div class="mini-bubble-out">
+              <div class="mini-receipt">
+                <div class="bank">BANCO PICHINCHA</div>
+                <div class="amount">$100.00</div>
+              </div>
+              <div class="mini-caption">Te envío el pago 🙌</div>
+            </div>
+            <div class="mini-bubble-in">Recibido, gracias 💛</div>
+          </div>
         </div>
-        <div class="step-check on" data-step="">✓</div>
-      </div>
-      <div class="step-line">
-        <div class="step-tag mono">03</div>
-        <div class="step-body">
-          <h3>Queda guardado</h3>
-          <p>Clasificado como ingreso o egreso, sin duplicados, con espacio para tu observación. Escribe "reporte" para verlo en el chat, o entra a tu dashboard sin necesidad de contraseña.</p>
+
+        <div class="step-panel">
+          <div class="step-num">2</div>
+          <div class="mini-phone">
+            <div class="mini-head">
+              <img class="mini-avatar" src="/favicon-48x48.png" alt="Comparte">
+              <div><div class="mn">Comparte</div><div class="ms">en línea</div></div>
+            </div>
+            <div class="mini-bubble-out">
+              <div class="mini-tag">↪ Reenviado</div>
+              <div class="mini-receipt">
+                <div class="bank">BANCO PICHINCHA</div>
+                <div class="amount">$100.00</div>
+              </div>
+            </div>
+            <div class="mini-out-note">
+              💰 <b>INGRESO</b> registrado<br>
+              Monto: 100.00 · Pichincha<br><br>
+              📊 Ingresos hoy: 100.00 · Egresos: 0.00<br><br>
+              📊 Dashboard: <span class="mini-link">…593.com/d/8f2a…</span>
+            </div>
+          </div>
         </div>
-        <div class="step-check on" data-step="">✓</div>
+
+        <div class="step-panel">
+          <div class="step-num">3</div>
+          <div class="mini-browser">
+            <div class="mini-browser-bar">
+              <div class="mini-dot" style="background:#FF6F91;"></div>
+              <div class="mini-dot" style="background:#FFD26B;"></div>
+              <div class="mini-dot" style="background:#7CD992;"></div>
+              <div class="mini-browser-url">pagos.comparte593.com/dashboard</div>
+            </div>
+            <div class="mini-dash">
+              <div class="mini-dash-title">Compart<span>e</span></div>
+              <div class="mini-dash-sub">Tienda Bella · Hoy</div>
+              <div class="mini-dash-cards">
+                <div class="mini-dash-card"><div class="l">INGRESOS</div><div class="v mv-green">$100</div></div>
+                <div class="mini-dash-card"><div class="l">EGRESOS</div><div class="v mv-pink">$0</div></div>
+                <div class="mini-dash-card"><div class="l">NETO</div><div class="v mv-gold">$100</div></div>
+              </div>
+              <div class="mini-dash-row"><span class="bk">Pichincha · 10:34</span><span class="am">+$100.00</span></div>
+              <div class="mini-dash-row" style="opacity:.4;"><span class="bk">— esperando el próximo —</span></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -620,7 +793,7 @@
       <div class="why-card">
         <div class="why-icon">🔍</div>
         <h3>Revisa cuando quieras</h3>
-        <p>Escribe "reporte" y ves tus ingresos y egresos del día, la semana o el mes, sin abrir Excel ni buscar entre chats.</p>
+        <p>Cada comprobante que envías te llega con el total de ingresos y egresos del día, y un link directo a tu dashboard, sin abrir Excel ni buscar entre chats.</p>
       </div>
       <div class="why-card">
         <div class="why-icon">EC</div>
@@ -641,6 +814,41 @@
   </div>
 </section>
 
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">Preguntas frecuentes</div>
+      <h2>Lo que más nos preguntan antes de empezar.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>¿Tengo que instalar una app?<span class="faq-plus">+</span></summary>
+        <p>No. Todo funciona desde WhatsApp, la app que ya usas todos los días. Solo agregas a Comparte como un contacto y le reenvías tus comprobantes.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué bancos reconoce Comparte?<span class="faq-plus">+</span></summary>
+        <p>Lee el formato de los principales bancos y cooperativas de Ecuador: Pichincha, Guayaquil, Produbanco, Pacífico, Bolivariano y más. Si el comprobante trae QR de Banco Pichincha, además verifica los datos directo con el banco.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Sirve para ingresos y egresos, o solo para lo que me pagan?<span class="faq-plus">+</span></summary>
+        <p>Para ambos. Reenvías el comprobante y Comparte lo clasifica solo como ingreso o egreso, y te muestra el total del día de los dos en cada respuesta.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cómo veo mis reportes y mi dashboard?<span class="faq-plus">+</span></summary>
+        <p>Con el primer comprobante que envíes cada día te llega un link a tu dashboard, sin necesidad de crear cuenta ni contraseña. Ahí ves el detalle del día, la semana o el mes.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Puedo agregar a mis empleados o cajeros?<span class="faq-plus">+</span></summary>
+        <p>Sí. En los planes Plus y Pro puedes vincular números adicionales para que tu equipo también registre comprobantes, y en el plan Pro además puedes asignar roles de administrador y cajero.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Puedo cancelar cuando quiera?<span class="faq-plus">+</span></summary>
+        <p>Sí, no hay permanencia. Tu plan es mensual y puedes cancelarlo cuando quieras desde tu dashboard o escribiéndonos directamente.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <div class="final-cta">
   <h2>Tu próximo comprobante puede registrarse solo</h2>
   <p>Empieza hoy. Sin instalar nada, sin cambiar cómo ya trabajas.</p>
@@ -650,6 +858,14 @@
 <footer>
   <div class="wrap">
     <p>© 2026 Comparte — Quito, Ecuador</p>
+    <div class="footer-social">
+      <a href="https://facebook.com/comparte593" target="_blank" rel="noopener" aria-label="Comparte en Facebook">
+        <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94z"/></svg>
+      </a>
+      <a href="https://instagram.com/comparte593" target="_blank" rel="noopener" aria-label="Comparte en Instagram">
+        <svg class="ig" viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="0.6" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
   </div>
 </footer>
 
