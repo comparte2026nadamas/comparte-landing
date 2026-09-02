@@ -409,49 +409,85 @@ src="https://www.facebook.com/tr?id=1711493623291058&ev=PageView&noscript=1"
   .mini-dash-row .am{color:#7CD992;font-weight:700;}
 
   /* ---------- PRICING ---------- */
-  .pricing-section{padding:96px 0;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .pricing-section{
+    padding:96px 0;position:relative;overflow:hidden;
+    background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    --accent:#20BD5C;--accent-ink:#0B4A26;--accent-tint:rgba(37,211,102,0.16);
+    --accent-tint-2:rgba(37,211,102,0.30);--accent-glow:rgba(32,189,92,0.38);
+  }
+  .pricing-section::before{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(600px 360px at 10% 0%, var(--accent-tint), transparent 62%),
+               radial-gradient(600px 360px at 90% 100%, var(--accent-tint), transparent 62%);
+  }
+  .pricing-section .wrap{position:relative;z-index:1;}
+  .telegram-section{
+    padding-top:56px;border-top:none;
+    --accent:#26A5E4;--accent-ink:#0C4568;--accent-tint:rgba(38,165,228,0.16);
+    --accent-tint-2:rgba(38,165,228,0.30);--accent-glow:rgba(38,165,228,0.38);
+  }
+
+  .channel-badge{
+    display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;
+    font-size:12px;font-weight:700;color:var(--accent-ink);background:var(--accent-tint-2);
+    border:1px solid var(--accent-glow);padding:5px 14px;border-radius:100px;margin-bottom:14px;
+  }
+  .section-sub{font-size:15px;color:var(--muted);line-height:1.6;max-width:540px;margin-top:10px;}
+
   .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   @media(max-width:860px){.pricing-grid{grid-template-columns:1fr;max-width:400px;}}
 
   .price-card{
-    background:var(--panel);border-radius:var(--radius);border:1px solid var(--line);
+    background:linear-gradient(165deg, rgba(255,255,255,0.68), var(--accent-tint) 150%);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+    border-radius:var(--radius);border:1px solid rgba(255,255,255,0.65);
     padding:0;position:relative;overflow:hidden;
+    box-shadow:0 1px 0 rgba(255,255,255,0.7) inset, 0 22px 44px -26px rgba(36,21,51,0.4);
     transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
-  .price-card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -20px rgba(0,0,0,0.6);border-color:rgba(255,111,145,0.3);}
-  .price-card.featured{border-color:var(--cyan);box-shadow:0 0 0 1px rgba(255,111,145,0.35), 0 24px 50px -20px rgba(255,111,145,0.25);}
+  .price-card:hover{transform:translateY(-4px);box-shadow:0 1px 0 rgba(255,255,255,0.7) inset, 0 30px 56px -22px var(--accent-glow);border-color:var(--accent-glow);}
+  .price-card.featured{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-glow), 0 30px 56px -22px var(--accent-glow);}
+  .price-ribbon{
+    background:linear-gradient(135deg,var(--accent),var(--accent-ink));color:#fff;font-weight:700;font-size:12.5px;
+    padding:11px 20px;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:0.01em;
+  }
   .price-perf{
     height:10px;
     background-image:radial-gradient(circle at 8px 5px, var(--bg-2) 5px, transparent 5.5px);
-    background-size:16px 10px;background-repeat:repeat-x;background-color:var(--panel);
+    background-size:16px 10px;background-repeat:repeat-x;background-color:transparent;
   }
-  .price-top{padding:28px 26px 22px;border-bottom:1px dashed var(--line);}
-  .price-plan{font-size:12px;font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em;color:var(--muted-2);text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
-  .badge{background:var(--cyan);color:#1B0F24;padding:3px 9px;border-radius:100px;font-size:10px;font-weight:700;}
+  .price-top{padding:26px 26px 20px;border-bottom:1px dashed rgba(36,21,51,0.12);}
+  .price-plan{font-size:12px;font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em;color:var(--muted-2);text-transform:uppercase;margin-bottom:14px;}
   .price-amount{font-family:'IBM Plex Mono',monospace;font-size:40px;font-weight:700;letter-spacing:-0.02em;color:var(--ink);}
   .price-amount span{font-size:15px;color:var(--muted-2);font-weight:500;}
   .price-desc{font-size:13.5px;color:var(--muted);margin-top:8px;}
-  .price-body{padding:22px 26px 28px;}
+  .price-body{padding:20px 26px 26px;}
   .price-body ul{list-style:none;}
   .price-body li{
-    font-size:14px;color:var(--ink);padding:8px 0;display:flex;gap:10px;align-items:flex-start;
-    border-bottom:1px solid var(--line-soft);
+    font-size:14px;color:var(--ink);padding:7px 0;display:flex;gap:12px;align-items:center;
+    border-bottom:1px solid rgba(36,21,51,0.06);
   }
   .price-body li:last-child{border-bottom:none;}
-  .price-body li::before{content:"✓";color:var(--cyan);font-weight:700;flex-shrink:0;}
+  .price-body li::before{
+    content:"✓";flex-shrink:0;width:22px;height:22px;border-radius:50%;
+    background:var(--accent-tint-2);color:var(--accent-ink);font-weight:700;font-size:12px;
+    display:flex;align-items:center;justify-content:center;
+  }
   .price-cta{
-    display:block;text-align:center;margin:20px 26px 26px;padding:13px;border-radius:100px;
-    background:var(--cyan);color:#1B0F24;font-weight:700;font-size:14px;
+    display:block;text-align:center;margin:18px 26px 26px;padding:13px;border-radius:100px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-ink));color:#fff;font-weight:700;font-size:14px;
+    box-shadow:0 14px 28px -14px var(--accent-glow);
     transition:transform .15s ease, box-shadow .15s ease;
   }
-  .price-cta:hover{transform:translateY(-2px);box-shadow:0 0 24px rgba(255,111,145,0.5);}
+  .price-cta:hover{transform:translateY(-2px);box-shadow:0 18px 34px -12px var(--accent-glow);}
 
   .extras-note{
     margin-top:28px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);
-    background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 20px;
-    display:flex;flex-wrap:wrap;gap:8px 24px;max-width:640px;
+    background:rgba(255,255,255,0.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.7);border-radius:10px;padding:16px 20px;
+    display:flex;flex-wrap:wrap;gap:8px 24px;max-width:640px;position:relative;
   }
-  .extras-note b{color:var(--gold-text);}
+  .extras-note b{color:var(--accent-ink);}
 
   /* ---------- PAYMENT METHODS ---------- */
   .payment-methods{
@@ -713,8 +749,9 @@ src="https://www.facebook.com/tr?id=1711493623291058&ev=PageView&noscript=1"
 <section class="pricing-section" id="precios">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-label">Precios</div>
+      <div class="channel-badge">💬 Por WhatsApp</div>
       <h2>Un plan por tamaño de negocio, no por promesas.</h2>
+      <p class="section-sub">Reenvía tu comprobante por WhatsApp y listo. Elige el plan según cuántos comprobantes subes al mes.</p>
     </div>
 
     <div class="pricing-grid">
@@ -738,9 +775,10 @@ src="https://www.facebook.com/tr?id=1711493623291058&ev=PageView&noscript=1"
       </div>
 
       <div class="price-card featured">
+        <div class="price-ribbon">⭐ Más elegido</div>
         <div class="price-perf"></div>
         <div class="price-top">
-          <div class="price-plan">Plus <span class="badge">Más elegido</span></div>
+          <div class="price-plan">Plus</div>
           <div class="price-amount">$6.50<span>/mes</span></div>
           <div class="price-desc">Para tiendas con más movimiento</div>
         </div>
@@ -817,6 +855,80 @@ src="https://www.facebook.com/tr?id=1711493623291058&ev=PageView&noscript=1"
         </span>
       </div>
       </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section telegram-section" id="precios-telegram">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="channel-badge">✈️ Por Telegram</div>
+      <h2>¿Prefieres Telegram? Mismos planes, $1 más barato al mes.</h2>
+      <p class="section-sub">Los mensajes por Telegram son gratis, así que ese ahorro se lo pasamos directo a tu plan. Mismos comprobantes al mes, mismo dashboard, mismo soporte — solo cambia el canal por el que registras.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-perf"></div>
+        <div class="price-top">
+          <div class="price-plan">Básico</div>
+          <div class="price-amount">$3.50<span>/mes</span></div>
+          <div class="price-desc">Para taxistas y tienditas</div>
+        </div>
+        <div class="price-body">
+          <ul>
+            <li>130 comprobantes al mes</li>
+            <li>Ingresos y egresos</li>
+            <li>Reporte por Telegram</li>
+            <li>Dashboard sin contraseña</li>
+            <li>1 número administrador</li>
+          </ul>
+          <a class="price-cta" href="https://pagos.comparte593.com/comprar-telegram/basico">Contratar Básico</a>
+        </div>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-ribbon">⭐ Más elegido</div>
+        <div class="price-perf"></div>
+        <div class="price-top">
+          <div class="price-plan">Plus</div>
+          <div class="price-amount">$5.50<span>/mes</span></div>
+          <div class="price-desc">Para tiendas con más movimiento</div>
+        </div>
+        <div class="price-body">
+          <ul>
+            <li>235 comprobantes al mes</li>
+            <li>Ingresos y egresos</li>
+            <li>Reporte por Telegram</li>
+            <li>Dashboard sin contraseña</li>
+            <li>Usuario adicional para empleados (bajo pedido)</li>
+          </ul>
+          <a class="price-cta" href="https://pagos.comparte593.com/comprar-telegram/plus">Contratar Plus</a>
+        </div>
+      </div>
+
+      <div class="price-card">
+        <div class="price-perf"></div>
+        <div class="price-top">
+          <div class="price-plan">Pro</div>
+          <div class="price-amount">$7.50<span>/mes</span></div>
+          <div class="price-desc">Para negocios más grandes con más cajeros</div>
+        </div>
+        <div class="price-body">
+          <ul>
+            <li>400 comprobantes al mes</li>
+            <li>Roles: administrador y cajero</li>
+            <li>Verificación QR (Pichincha)</li>
+            <li>Dashboard sin contraseña, con exportación</li>
+          </ul>
+          <a class="price-cta" href="https://pagos.comparte593.com/comprar-telegram/pro">Contratar Pro</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="extras-note">
+      <span><b>+$1/mes</b> por cada usuario adicional vinculado a tu negocio (lo activamos nosotros)</span>
+      <span><b>+$2</b> por cada bloque de 50 comprobantes extra si superas tu límite</span>
     </div>
   </div>
 </section>
